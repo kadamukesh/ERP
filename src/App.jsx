@@ -28,6 +28,8 @@ import FacultyCourseMapping from "./components/Admin/FacultyCourseMapping.jsx";
 import MyCourses from "./components/Faculty/MyCourses.jsx";
 import Feedback from "./components/Student/Feedback.jsx";
 import FacultyLeave from "./components/Faculty/FacultyLeave.jsx";
+import LeaveStatus from "./components/Faculty/LeaveStatus.jsx";
+import AdminLeaveManagement from "./components/Admin/AdminLeaveManagement.jsx";
 
 function App() {
   return (
@@ -190,6 +192,16 @@ function App() {
           }
         />
 
+        <Route
+          exact
+          path="adminleave"
+          element={
+            <>
+              <AdminLeaveManagement />
+            </>
+          }
+        />
+
         {/* Faculty */}
         <Route
           exact
@@ -227,6 +239,16 @@ function App() {
           element={
             <>
               <FacultyLeave />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="/fleavestatus"
+          element={
+            <>
+              <LeaveStatus />
             </>
           }
         />
