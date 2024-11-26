@@ -27,6 +27,7 @@ import FacultyCourseMapping from "./components/Admin/FacultyCourseMapping.jsx";
 
 import MyCourses from "./components/Faculty/MyCourses.jsx";
 import Feedback from "./components/Student/Feedback.jsx";
+import FacultyLeave from "./components/Faculty/FacultyLeave.jsx";
 
 function App() {
   return (
@@ -216,6 +217,16 @@ function App() {
           element={
             <>
               <MyCourses />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="/fleave"
+          element={
+            <>
+              <FacultyLeave />
             </>
           }
         />

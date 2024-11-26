@@ -175,7 +175,7 @@ const Fsidebar = () => {
           {leaveDropdown && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/fleave"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />

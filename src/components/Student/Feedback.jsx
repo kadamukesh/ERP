@@ -120,7 +120,9 @@ const Feedback = () => {
       setFeedbackResponses({});
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      setError("Failed to submit feedback. Please try again later.");
+      setError(
+        "Feedback has already been submitted for this faculty and section."
+      );
     }
   };
 
@@ -145,22 +147,22 @@ const Feedback = () => {
       <div className="flex flex-1 overflow-hidden">
         <Ssidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <h1 className="text-4xl font-bold text-center py-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg animate-gradient">
+          <h1 className="text-4xl font-bold text-center py-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg">
             Student Feedback
           </h1>
           <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
             {error && (
-              <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 animate-fade-in">
+              <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4">
                 {error}
               </div>
             )}
             {successMessage && (
-              <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4 animate-fade-in">
+              <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4">
                 {successMessage}
               </div>
             )}
             {!selectedFaculty ? (
-              <div className="animate-fade-in">
+              <div>
                 <h2 className="text-2xl font-semibold mb-6 text-indigo-800">
                   Select a Faculty
                 </h2>
@@ -175,7 +177,7 @@ const Feedback = () => {
                         <img
                           src={`data:image/jpeg;base64,${faculty.image}`}
                           alt="Faculty"
-                          className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200 transition-transform duration-300 transform hover:scale-105"
+                          className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200"
                         />
                         <h3 className="font-semibold text-xl text-center mt-4 text-indigo-700">
                           {faculty.name}
@@ -192,7 +194,7 @@ const Feedback = () => {
                 </div>
               </div>
             ) : (
-              <div className="max-w-4xl mx-auto animate-fade-in">
+              <div className="max-w-4xl mx-auto">
                 <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
                   <h2 className="text-3xl font-semibold mb-6 text-indigo-800">
                     Feedback for {selectedFaculty.name}
@@ -204,7 +206,7 @@ const Feedback = () => {
                     <select
                       value={selectedSection}
                       onChange={handleSectionChange}
-                      className="w-full p-3 border-2 rounded-lg border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
+                      className="w-full p-3 border-2 rounded-lg border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                       <option value="">Select a section</option>
                       {sections.map((section) => (
@@ -215,52 +217,52 @@ const Feedback = () => {
                     </select>
                   </div>
                   {selectedSection && (
-                    <div className="space-y-10">
-                      {feedbackQuestions.map((q) => (
-                        <div
-                          key={q.id}
-                          className="pb-8 border-b-2 border-indigo-100 last:border-b-0"
-                        >
-                          <p className="text-xl font-medium mb-6 text-indigo-800">
-                            {q.question}
-                          </p>
-                          <div className="flex justify-center gap-8">
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                              <label
-                                key={`${q.id}-${rating}`}
-                                className="relative inline-block group"
-                              >
-                                <input
-                                  type="radio"
-                                  name={q.id}
-                                  value={rating}
-                                  onChange={() =>
-                                    handleFeedbackChange(q.id, rating)
-                                  }
-                                  checked={feedbackResponses[q.id] === rating}
-                                  className="sr-only peer"
-                                />
-                                <div className="w-14 h-14 flex items-center justify-center rounded-full border-3 cursor-pointer transition-all duration-300 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 border-indigo-300 text-indigo-600 hover:border-indigo-500 hover:bg-indigo-50 group-hover:scale-110">
-                                  {rating}
-                                </div>
-                              </label>
-                            ))}
+                    <>
+                      <div className="space-y-10">
+                        {feedbackQuestions.map((q) => (
+                          <div
+                            key={q.id}
+                            className="pb-8 border-b-2 border-indigo-100 last:border-b-0"
+                          >
+                            <p className="text-xl font-medium mb-6 text-indigo-800">
+                              {q.question}
+                            </p>
+                            <div className="flex justify-center gap-8">
+                              {[1, 2, 3, 4, 5].map((rating) => (
+                                <label
+                                  key={`${q.id}-${rating}`}
+                                  className="relative inline-block"
+                                >
+                                  <input
+                                    type="radio"
+                                    name={q.id}
+                                    value={rating}
+                                    onChange={() =>
+                                      handleFeedbackChange(q.id, rating)
+                                    }
+                                    checked={feedbackResponses[q.id] === rating}
+                                    className="sr-only peer"
+                                  />
+                                  <div className="w-14 h-14 flex items-center justify-center rounded-full border-3 cursor-pointer transition-all duration-300 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 border-indigo-300 text-indigo-600 hover:border-indigo-500">
+                                    {rating}
+                                  </div>
+                                </label>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                      <div className="flex justify-center mt-10">
+                        <button
+                          onClick={handleSubmitFeedback}
+                          className="px-6 py-3 bg-indigo-600 text-white rounded-lg text-lg font-medium shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                          Submit Feedback
+                        </button>
+                      </div>
+                    </>
                   )}
                 </div>
-                {selectedSection && (
-                  <div className="sticky bottom-4 bg-white rounded-xl shadow-lg p-6 animate-slide-up">
-                    <button
-                      onClick={handleSubmitFeedback}
-                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Submit Feedback
-                    </button>
-                  </div>
-                )}
               </div>
             )}
           </div>
