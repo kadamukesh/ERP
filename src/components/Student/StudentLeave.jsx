@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Ftopbar from "./Ftopbar.jsx";
-import Fsidebar from "./Fsidebar.jsx";
+import Stopbar from "./Stopbar.jsx";
+import Ssidebar from "./Ssidebar.jsx";
 import axios from "axios";
 import { Calendar } from "lucide-react";
 
-export default function FacultyLeave() {
+export default function StudentLeave() {
   const [formData, setFormData] = useState({
     reason: "",
     startDate: "",
@@ -13,15 +13,15 @@ export default function FacultyLeave() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [facultyId, setFacultyId] = useState("");
+  const [studentId, setStudentId] = useState("");
 
   useEffect(() => {
-    const id = localStorage.getItem("fid");
+    const id = localStorage.getItem("sid");
     console.log(id);
     if (id) {
-      setFacultyId(id);
+      setStudentId(id);
     } else {
-      setError("Faculty ID not found. Please log in again.");
+      setError("Student ID not found. Please log in again.");
     }
   }, []);
 
@@ -48,8 +48,8 @@ export default function FacultyLeave() {
     e.preventDefault();
     if (!validateDates()) return;
 
-    if (!facultyId) {
-      setError("Faculty ID not available. Please log in again.");
+    if (!studentId) {
+      setError("Student ID not available. Please log in again.");
       return;
     }
 
@@ -58,10 +58,10 @@ export default function FacultyLeave() {
       setError("");
       setSuccess("");
 
-      const payload = { ...formData, facultyId };
+      const payload = { ...formData, studentId };
       console.log("Sending payload:", payload);
       // Change this line in your handleSubmit function
-      await axios.post("http://localhost:8080/faculty/leave/apply", payload);
+      await axios.post("http://localhost:8080/student/leave/apply", payload);
 
       setSuccess("Leave request submitted successfully!");
       setFormData({
@@ -79,9 +79,9 @@ export default function FacultyLeave() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Ftopbar />
+      <Stopbar />
       <div className="flex flex-1">
-        <Fsidebar />
+        <Ssidebar />
         <div className="flex-1 p-10 bg-gray-100">
           <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
             <div className="flex items-center mb-6">

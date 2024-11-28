@@ -57,7 +57,7 @@ const Login = () => {
       password: user.password,
     });
 
-    if (adminData && adminData.role === "admin") {
+    if (adminData) {
       localStorage.setItem("adminUsername", user.username);
       window.location.href = "/adminhome";
       return;
@@ -112,6 +112,7 @@ const Login = () => {
       localStorage.setItem("dob", studentData.dob);
       localStorage.setItem("atype", studentData.atype);
       localStorage.setItem("uid", studentData.uid);
+      localStorage.setItem("sid", studentData.sid);
       window.location.href = "/studenthome";
       return;
     }

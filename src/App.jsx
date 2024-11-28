@@ -28,8 +28,13 @@ import FacultyCourseMapping from "./components/Admin/FacultyCourseMapping.jsx";
 import MyCourses from "./components/Faculty/MyCourses.jsx";
 import Feedback from "./components/Student/Feedback.jsx";
 import FacultyLeave from "./components/Faculty/FacultyLeave.jsx";
+import StudentLeave from "./components/Student/StudentLeave.jsx";
 import LeaveStatus from "./components/Faculty/LeaveStatus.jsx";
 import AdminLeaveManagement from "./components/Admin/AdminLeaveManagement.jsx";
+import SLeaveStatus from "./components/Student/SLeaveStatus.jsx";
+import SAdminLeaveManagement from "./components/Admin/SAdminLeaveManagement.jsx";
+import StudentCourseReg from "./components/Student/StudentCourseReg.jsx";
+import RegCourses from "./components/Student/RegCourses.jsx";
 
 function App() {
   return (
@@ -201,6 +206,35 @@ function App() {
             </>
           }
         />
+        <Route
+          exact
+          path="sadminleave"
+          element={
+            <>
+              <SAdminLeaveManagement />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="scoursereg"
+          element={
+            <>
+              <StudentCourseReg />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="regcourses"
+          element={
+            <>
+              <RegCourses />
+            </>
+          }
+        />
 
         {/* Faculty */}
         <Route
@@ -260,6 +294,26 @@ function App() {
           element={
             <>
               <Studenthome />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="/sleave"
+          element={
+            <>
+              <StudentLeave />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="/sleavestatus"
+          element={
+            <>
+              <SLeaveStatus />
             </>
           }
         />

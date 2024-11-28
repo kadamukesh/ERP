@@ -94,18 +94,26 @@ const Ssidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <FaRegEdit className="text-xl" />
-              <span>Academic Registration</span>
+              <span>Registration</span>
             </div>
             {counsellingDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
           {counsellingDropdown && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/scoursereg"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
-                Regular Course Registration
+                Course Registration
+              </Link>
+
+              <Link
+                to="/regcourses"
+                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
+              >
+                <DoubleArrowIcon />
+                View My courses
               </Link>
             </div>
           )}
@@ -260,19 +268,29 @@ const Ssidebar = () => {
                 <DoubleArrowIcon />
                 Room Registration
               </Link>
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                Apply Out Pass
-              </Link>
+
               <Link
                 to="#"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
                 My Hostel Room Info
+              </Link>
+
+              <Link
+                to="/sleave"
+                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
+              >
+                <DoubleArrowIcon />
+                Apply Out Pass
+              </Link>
+
+              <Link
+                to="/sleavestatus"
+                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
+              >
+                <DoubleArrowIcon />
+                Out Pass Status
               </Link>
             </div>
           )}

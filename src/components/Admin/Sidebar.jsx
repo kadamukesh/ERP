@@ -241,7 +241,7 @@ const Sidebar = () => {
                 Leave Request of Faculty
               </Link>
               <Link
-                to="#"
+                to="/sadminleave"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />

@@ -11,10 +11,23 @@ const AddCourse = () => {
     coursetitle: "",
     ltps: "",
     credits: "",
+    academicYear: "",
+    semester: "",
+    department: "",
   });
 
+  // Options for the dropdowns
+  const academicYears = [
+    "2024-2025",
+    "2025-2026",
+    "2026-2027",
+    "2027-2028",
+    "2028-2029",
+  ];
+
+  const semesters = ["Odd Semester", "Even Semester", "Summer Term"];
+
   const handleChange = (e) => {
-    console.log(e.target.value);
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
@@ -50,6 +63,9 @@ const AddCourse = () => {
       coursetitle: "",
       ltps: "",
       credits: "",
+      academicYear: "",
+      semester: "",
+      department: "",
     });
   };
 
@@ -88,10 +104,6 @@ const AddCourse = () => {
                   onChange={handleChange}
                   required
                   className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
-                  style={{
-                    backgroundColor: "#f1f2f6",
-                    borderColor: "#bdc3c7",
-                  }}
                 />
               </div>
               <div>
@@ -103,10 +115,6 @@ const AddCourse = () => {
                   onChange={handleChange}
                   required
                   className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
-                  style={{
-                    backgroundColor: "#f1f2f6",
-                    borderColor: "#bdc3c7",
-                  }}
                 />
               </div>
               <div>
@@ -118,10 +126,6 @@ const AddCourse = () => {
                   onChange={handleChange}
                   required
                   className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
-                  style={{
-                    backgroundColor: "#f1f2f6",
-                    borderColor: "#bdc3c7",
-                  }}
                 />
               </div>
               <div>
@@ -133,10 +137,51 @@ const AddCourse = () => {
                   onChange={handleChange}
                   required
                   className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
-                  style={{
-                    backgroundColor: "#f1f2f6",
-                    borderColor: "#bdc3c7",
-                  }}
+                />
+              </div>
+              <div>
+                <label className="text-gray-700">Academic Year:</label>
+                <select
+                  name="academicYear"
+                  value={course.academicYear}
+                  onChange={handleChange}
+                  required
+                  className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
+                >
+                  <option value="">Select Academic Year</option>
+                  {academicYears.map((year, index) => (
+                    <option key={index} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-gray-700">Semester:</label>
+                <select
+                  name="semester"
+                  value={course.semester}
+                  onChange={handleChange}
+                  required
+                  className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
+                >
+                  <option value="">Select Semester</option>
+                  {semesters.map((sem, index) => (
+                    <option key={index} value={sem}>
+                      {sem}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-gray-700">Department:</label>
+                <input
+                  type="text"
+                  name="department"
+                  value={course.department}
+                  onChange={handleChange}
+                  required
+                  className="border w-full p-2 rounded-md focus:ring focus:border-blue-300"
                 />
               </div>
             </div>
