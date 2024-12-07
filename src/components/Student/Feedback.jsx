@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Stopbar from "./Stopbar";
-import Ssidebar from "./Ssidebar";
+import axios from "axios";
+import Stopbar from "./Stopbar.jsx";
+import Ssidebar from "./Ssidebar.jsx";
 
 const Feedback = () => {
+  const [registeredCourses, setRegisteredCourses] = useState([]);
   const [faculties, setFaculties] = useState([]);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [feedbackResponses, setFeedbackResponses] = useState({});
@@ -11,49 +13,64 @@ const Feedback = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [submittedFeedbacks, setSubmittedFeedbacks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchFaculties();
+    fetchRegisteredCourses();
   }, []);
 
-  const fetchFaculties = async () => {
+  const fetchRegisteredCourses = async () => {
+    const studentUsername = localStorage.getItem("studentUsername");
+    if (!studentUsername) {
+      setError("Student username not found. Please log in again.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:8080/viewfaculty", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      setFaculties(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error("Error fetching faculties:", error);
-      setError("Failed to fetch faculties. Please try again later.");
+      const response = await axios.get(
+        `http://localhost:8080/registered-courses/${studentUsername}`
+      );
+      setRegisteredCourses(response.data);
+      fetchFaculties(response.data);
+    } catch (err) {
+      setError("Failed to fetch registered courses. Please try again later.");
+      setIsLoading(false);
     }
   };
 
-  const handleFacultyClick = async (faculty) => {
+  const fetchFaculties = async (courses) => {
+    try {
+      const response = await axios.get("http://localhost:8080/viewfaculty", {
+        withCredentials: true,
+      });
+      const allFaculties = response.data;
+
+      const filteredFaculties = allFaculties.filter((faculty) =>
+        courses.some((course) => course.faculty.id === faculty.id)
+      );
+
+      setFaculties(filteredFaculties);
+    } catch (error) {
+      console.error("Error fetching faculties:", error);
+      setError("Failed to fetch faculties. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFacultyClick = (faculty) => {
     setSelectedFaculty(faculty);
     setSelectedSection("");
     setFeedbackResponses({});
     setSuccessMessage(null);
     setError(null);
-    try {
-      const response = await fetch(
-        `http://localhost:8080/vfcmByid/${faculty.id}`,
-        { method: "GET", credentials: "include" }
-      );
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      const uniqueSections = [
-        ...new Set(data.map((mapping) => mapping.section)),
-      ];
-      setSections(uniqueSections);
-    } catch (error) {
-      console.error("Error fetching sections:", error);
-      setError("Failed to fetch sections. Please try again later.");
-    }
+
+    const facultySections = registeredCourses
+      .filter((course) => course.faculty.id === faculty.id)
+      .map((course) => course.section);
+
+    setSections([...new Set(facultySections)]);
   };
 
   const handleSectionChange = (e) => {
@@ -98,22 +115,13 @@ const Feedback = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/addfeedback", {
-        method: "POST",
+      await axios.post("http://localhost:8080/addfeedback", payload, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(payload),
-        credentials: "include",
+        withCredentials: true,
       });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorText}`
-        );
-      }
 
       setSuccessMessage("Feedback submitted successfully!");
       setSubmittedFeedbacks([...submittedFeedbacks, feedbackKey]);
@@ -147,54 +155,58 @@ const Feedback = () => {
       <div className="flex flex-1 overflow-hidden">
         <Ssidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <h1 className="text-4xl font-bold text-center py-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg">
+          <h1 className="text-4xl font-bold text-center py-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg flex-shrink-0">
             Student Feedback
           </h1>
-          <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
-            {error && (
-              <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4">
-                {error}
-              </div>
-            )}
-            {successMessage && (
-              <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4">
-                {successMessage}
-              </div>
-            )}
-            {!selectedFaculty ? (
-              <div>
-                <h2 className="text-2xl font-semibold mb-6 text-indigo-800">
-                  Select a Faculty
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {faculties.map((faculty) => (
-                    <div
-                      key={faculty.id}
-                      className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                      onClick={() => handleFacultyClick(faculty)}
-                    >
-                      <div className="p-6">
-                        <img
-                          src={`data:image/jpeg;base64,${faculty.image}`}
-                          alt="Faculty"
-                          className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200"
-                        />
-                        <h3 className="font-semibold text-xl text-center mt-4 text-indigo-700">
-                          {faculty.name}
-                        </h3>
-                        <p className="text-purple-600 text-center mt-2">
-                          {faculty.department}
-                        </p>
-                        <p className="text-indigo-500 text-center mt-1">
-                          {faculty.eid}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-4xl mx-auto px-6 py-4 pb-20">
+              {error && (
+                <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4">
+                  {error}
                 </div>
-              </div>
-            ) : (
-              <div className="max-w-4xl mx-auto">
+              )}
+              {successMessage && (
+                <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4">
+                  {successMessage}
+                </div>
+              )}
+              {isLoading ? (
+                <div className="text-center py-10">
+                  <p className="text-xl text-indigo-600">Loading...</p>
+                </div>
+              ) : !selectedFaculty ? (
+                <div>
+                  <h2 className="text-2xl font-semibold mb-6 text-indigo-800">
+                    Select a Faculty from Your Registered Courses
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {faculties.map((faculty) => (
+                      <div
+                        key={faculty.id}
+                        className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                        onClick={() => handleFacultyClick(faculty)}
+                      >
+                        <div className="p-6">
+                          <img
+                            src={`data:image/jpeg;base64,${faculty.image}`}
+                            alt="Faculty"
+                            className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200"
+                          />
+                          <h3 className="font-semibold text-xl text-center mt-4 text-indigo-700">
+                            {faculty.name}
+                          </h3>
+                          <p className="text-purple-600 text-center mt-2">
+                            {faculty.department}
+                          </p>
+                          <p className="text-indigo-500 text-center mt-1">
+                            {faculty.eid}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
                 <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
                   <h2 className="text-3xl font-semibold mb-6 text-indigo-800">
                     Feedback for {selectedFaculty.name}
@@ -263,8 +275,8 @@ const Feedback = () => {
                     </>
                   )}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

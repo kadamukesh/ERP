@@ -5,6 +5,7 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
+import { MdSupportAgent } from "react-icons/md";
 
 const Sidebar = () => {
   const [studentDropdown, setStudentDropdown] = useState(false);
@@ -12,6 +13,8 @@ const Sidebar = () => {
   const [courseDropdown, setCourseDropdown] = useState(false);
   const [feedbackDropdown, setFeedbackDropdown] = useState(false);
   const [leaveDropdown, setLeaveDropdown] = useState(false);
+
+  const [counsellingdropdown, setCounsellingDropdown] = useState(false);
   const location = useLocation();
   const DoubleArrowIcon = () => {
     return (
@@ -214,6 +217,31 @@ const Sidebar = () => {
               >
                 <DoubleArrowIcon />
                 View feedback
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Counselling Dropdown */}
+        <div>
+          <button
+            onClick={() => setCounsellingDropdown(!counsellingdropdown)}
+            className="flex items-center justify-between w-full py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
+          >
+            <div className="flex items-center space-x-2">
+              <MdSupportAgent className="text-xl" />
+              <span>Counselling</span>
+            </div>
+            {counsellingdropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          </button>
+          {counsellingdropdown && (
+            <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
+              <Link
+                to="/mappingcounselling"
+                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
+              >
+                <DoubleArrowIcon />
+                Map Counselling
               </Link>
             </div>
           )}

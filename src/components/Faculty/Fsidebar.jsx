@@ -86,7 +86,7 @@ const Fsidebar = () => {
           {counsellingDropdown && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/myassigned"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
@@ -150,7 +150,7 @@ const Fsidebar = () => {
           {feedbackDropdown && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/vfeedback"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />

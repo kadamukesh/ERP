@@ -35,6 +35,10 @@ import SLeaveStatus from "./components/Student/SLeaveStatus.jsx";
 import SAdminLeaveManagement from "./components/Admin/SAdminLeaveManagement.jsx";
 import StudentCourseReg from "./components/Student/StudentCourseReg.jsx";
 import RegCourses from "./components/Student/RegCourses.jsx";
+import ViewFeedback from "./components/Faculty/ViewFeedback.jsx";
+import MapCounselling from "./components/Admin/MapCounselling.jsx";
+import Mycounsellor from "./components/Student/Mycounsellor.jsx";
+import AssignedStudents from "./components/Faculty/AssignedStudents.jsx";
 
 function App() {
   return (
@@ -199,6 +203,36 @@ function App() {
 
         <Route
           exact
+          path="mappingcounselling"
+          element={
+            <>
+              <MapCounselling />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="mycounselling"
+          element={
+            <>
+              <Mycounsellor />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="myassigned"
+          element={
+            <>
+              <AssignedStudents />
+            </>
+          }
+        />
+
+        <Route
+          exact
           path="adminleave"
           element={
             <>
@@ -283,6 +317,16 @@ function App() {
           element={
             <>
               <LeaveStatus />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="/vfeedback"
+          element={
+            <>
+              <ViewFeedback />
             </>
           }
         />

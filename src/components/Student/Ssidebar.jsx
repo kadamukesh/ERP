@@ -8,6 +8,8 @@ import { VscFeedback } from "react-icons/vsc";
 import { FaUserGraduate } from "react-icons/fa6";
 import { PiExamDuotone } from "react-icons/pi";
 import { FaRegEdit } from "react-icons/fa";
+import { FaUserTie } from "react-icons/fa6";
+
 import {
   MdAppRegistration,
   MdOutlineFreeCancellation,
@@ -37,6 +39,32 @@ const Ssidebar = () => {
         console.error("There was an error fetching the students!", error);
       });
   }, []);
+
+  useEffect(() => {
+    if (
+      location.pathname.includes("/scoursereg") ||
+      location.pathname.includes("/regcourses")
+    ) {
+      setCounsellingDropdown(true);
+    } else {
+      setCounsellingDropdown(false);
+    }
+
+    if (
+      location.pathname.includes("/sleave") ||
+      location.pathname.includes("/sleavestatus")
+    ) {
+      setstudentinfodropdown(true);
+    } else {
+      setstudentinfodropdown(false);
+    }
+
+    if (location.pathname.includes("/feedback")) {
+      setFeedbackDropdown(true);
+    } else {
+      setFeedbackDropdown(false);
+    }
+  }, [location.pathname]);
 
   const DoubleArrowIcon = () => {
     return (
@@ -78,13 +106,13 @@ const Ssidebar = () => {
           <span>Home</span>
         </Link>
 
-        <Link
+        {/* <Link
           to="#"
           className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
         >
           <MdAppRegistration className="text-xl" />
           <span>Attendance Register</span>
-        </Link>
+        </Link> */}
 
         {/* Counselling Dropdown */}
         <div>
@@ -298,36 +326,13 @@ const Ssidebar = () => {
 
         {/* Exam section */}
 
-        <div>
-          <button
-            onClick={() => setexamdropdown(!exam)}
-            className="flex items-center justify-between w-full py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
-          >
-            <div className="flex items-center space-x-2">
-              <PiExamDuotone className="text-xl" />
-              <span>Club/Activities</span>
-            </div>
-            {exam ? <IoIosArrowUp /> : <IoIosArrowDown />}
-          </button>
-          {exam && (
-            <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                Register to club
-              </Link>
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                Register to Club Events
-              </Link>
-            </div>
-          )}
-        </div>
+        <Link
+          to="/mycounselling"
+          className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
+        >
+          <FaUserTie className="text-xl" />
+          <span>My Councellor</span>
+        </Link>
 
         <Link
           to="/studentProfile"

@@ -9,20 +9,49 @@ const StudentCourseReg = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [academicYears, setAcademicYears] = useState([]);
+  const [semesters, setSemesters] = useState([]);
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
 
   useEffect(() => {
-    fetchAvailableMappings();
+    fetchAcademicYearsAndSemesters();
   }, []);
+
+  useEffect(() => {
+    if (selectedAcademicYear && selectedSemester) {
+      fetchAvailableMappings();
+    }
+  }, [selectedAcademicYear, selectedSemester]);
+
+  const fetchAcademicYearsAndSemesters = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/academic-years-and-semesters"
+      );
+      setAcademicYears(response.data.academicYears);
+      setSemesters(response.data.semesters);
+    } catch (err) {
+      setError(
+        "Failed to fetch academic years and semesters. Please try again later."
+      );
+      console.error("Error fetching academic years and semesters:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchAvailableMappings = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/faculty-course-mappings"
+        `http://localhost:8080/faculty-course-mappings?academicYear=${selectedAcademicYear}&semester=${selectedSemester}`
       );
       setAvailableMappings(response.data);
     } catch (err) {
       setError("Failed to fetch available courses. Please try again later.");
+      console.error("Error fetching available mappings:", err);
     } finally {
       setIsLoading(false);
     }
@@ -71,6 +100,7 @@ const StudentCourseReg = () => {
         err.response?.data ||
           "An error occurred during registration. Please try again."
       );
+      console.error("Error registering courses:", err);
     } finally {
       setIsLoading(false);
     }
@@ -87,12 +117,58 @@ const StudentCourseReg = () => {
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="academicYear"
+              >
+                Academic Year
+              </label>
+              <select
+                id="academicYear"
+                value={selectedAcademicYear}
+                onChange={(e) => setSelectedAcademicYear(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option value="">Select Academic Year</option>
+                {academicYears.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="semester"
+              >
+                Semester
+              </label>
+              <select
+                id="semester"
+                value={selectedSemester}
+                onChange={(e) => setSelectedSemester(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option value="">Select Semester</option>
+                {semesters.map((semester) => (
+                  <option key={semester} value={semester}>
+                    {semester}
+                  </option>
+                ))}
+              </select>
+            </div>
             <fieldset disabled={isLoading}>
               <legend className="block text-gray-700 text-lg font-bold mb-4">
                 Available Courses
               </legend>
               {isLoading ? (
                 <p className="text-gray-600">Loading courses...</p>
+              ) : availableMappings.length === 0 ? (
+                <p className="text-gray-600">
+                  No courses available for registration.
+                </p>
               ) : (
                 <div className="max-h-60 overflow-y-auto">
                   {availableMappings.map((mapping) => (
@@ -113,8 +189,9 @@ const StudentCourseReg = () => {
                         htmlFor={`mapping-${mapping.mappingid}`}
                         className="text-sm text-gray-700"
                       >
-                        {mapping.course.coursetitle} - {mapping.faculty.name}{" "}
-                        (Section: {mapping.section})
+                        {mapping.course?.coursetitle || "Unknown Course"} -{" "}
+                        {mapping.faculty?.name || "Unknown Faculty"} (Section:{" "}
+                        {mapping.section || "N/A"})
                       </label>
                     </div>
                   ))}
@@ -125,7 +202,7 @@ const StudentCourseReg = () => {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || availableMappings.length === 0}
               >
                 {isLoading ? "Registering..." : "Register for Selected Courses"}
               </button>
