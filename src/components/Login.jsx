@@ -52,10 +52,13 @@ const Login = () => {
     };
 
     // Try admin login
-    const adminData = await tryLogin("http://localhost:8080/checkadminLogin", {
-      username: user.username,
-      password: user.password,
-    });
+    const adminData = await tryLogin(
+      "https://springbootprojecterp.up.railway.app/checkadminLogin",
+      {
+        username: user.username,
+        password: user.password,
+      }
+    );
 
     if (adminData) {
       localStorage.setItem("adminUsername", user.username);
@@ -65,7 +68,7 @@ const Login = () => {
 
     // Try faculty login
     const facultyData = await tryLogin(
-      "http://localhost:8080/checkfacultyLogin",
+      "https://springbootprojecterp.up.railway.app/checkfacultyLogin",
       {
         eid: user.username,
         password: user.password,
@@ -93,7 +96,7 @@ const Login = () => {
 
     // Try student login
     const studentData = await tryLogin(
-      "http://localhost:8080/checkstudentLogin",
+      "https://springbootprojecterp.up.railway.app/checkstudentLogin",
       {
         uid: user.username,
         password: user.password,

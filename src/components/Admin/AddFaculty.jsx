@@ -68,7 +68,7 @@ const AddFaculty = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/addfaculty", // Ensure the endpoint is correct
+        "https://springbootprojecterp.up.railway.app/addfaculty", // Ensure the endpoint is correct
         formData,
         {
           headers: {

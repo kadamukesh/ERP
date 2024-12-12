@@ -17,7 +17,7 @@ const ViewAllPayments = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8080/viewAllPayments?studentId=${studentId}`,
+          `https://springbootprojecterp.up.railway.app/viewAllPayments?studentId=${studentId}`,
           {
             headers: {
               "api-key": "1234567890",

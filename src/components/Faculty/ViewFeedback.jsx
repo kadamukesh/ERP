@@ -21,7 +21,7 @@ export default function ViewFeedback() {
         return;
       }
       const response = await axios.get(
-        `http://localhost:8080/${facultyId}/courses`,
+        `https://springbootprojecterp.up.railway.app/${facultyId}/courses`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export default function ViewFeedback() {
         return;
       }
       const response = await axios.get(
-        `http://localhost:8080/${facultyId}/feedback/${courseId}`,
+        `https://springbootprojecterp.up.railway.app/${facultyId}/feedback/${courseId}`,
         {
           headers: {
             "Content-Type": "application/json",

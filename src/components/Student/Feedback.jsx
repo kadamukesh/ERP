@@ -29,7 +29,7 @@ const Feedback = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/registered-courses/${studentUsername}`
+        `https://springbootprojecterp.up.railway.app/registered-courses/${studentUsername}`
       );
       setRegisteredCourses(response.data);
       fetchFaculties(response.data);
@@ -41,9 +41,12 @@ const Feedback = () => {
 
   const fetchFaculties = async (courses) => {
     try {
-      const response = await axios.get("http://localhost:8080/viewfaculty", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "https://springbootprojecterp.up.railway.app/viewfaculty",
+        {
+          withCredentials: true,
+        }
+      );
       const allFaculties = response.data;
 
       const filteredFaculties = allFaculties.filter((faculty) =>
@@ -115,13 +118,17 @@ const Feedback = () => {
     };
 
     try {
-      await axios.post("http://localhost:8080/addfeedback", payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        withCredentials: true,
-      });
+      await axios.post(
+        "https://springbootprojecterp.up.railway.app/addfeedback",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
       setSuccessMessage("Feedback submitted successfully!");
       setSubmittedFeedbacks([...submittedFeedbacks, feedbackKey]);

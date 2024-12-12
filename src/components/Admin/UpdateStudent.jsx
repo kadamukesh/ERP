@@ -29,7 +29,7 @@ const UpdateStudent = () => {
 
     // Send the updated student data to the backend using axios.put
     axios
-      .put(`http://localhost:8080/updatestudent`, student)
+      .put(`https://springbootprojecterp.up.railway.app/updatestudent`, student)
       .then((response) => {
         setMessage("Student updated successfully!"); // Set success message
 
@@ -60,7 +60,9 @@ const UpdateStudent = () => {
   useEffect(() => {
     const studentId = "1"; // Example student ID, you may get this from props or route params
     axios
-      .get(`http://localhost:8080/viewstudent/${studentId}`)
+      .get(
+        `https://springbootprojecterp.up.railway.app/viewstudent/${studentId}`
+      )
       .then((response) => {
         setStudent(response.data); // Pre-fill form with existing student data
       })

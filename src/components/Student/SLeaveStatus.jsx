@@ -15,7 +15,7 @@ const SLeaveStatus = () => {
     }
 
     axios
-      .get(`http://localhost:8080/student/${studentId}`)
+      .get(`https://springbootprojecterp.up.railway.app/student/${studentId}`)
       .then((response) => {
         setLeaves(response.data);
       })

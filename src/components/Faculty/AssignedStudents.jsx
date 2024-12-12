@@ -14,7 +14,7 @@ const AssignedStudents = () => {
         // Assume the faculty ID is stored in localStorage after login
         const facultyId = localStorage.getItem("fid");
         const response = await fetch(
-          `http://localhost:8080/${facultyId}/assigned-students`
+          `https://springbootprojecterp.up.railway.app/${facultyId}/assigned-students`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch assigned students");

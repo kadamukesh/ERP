@@ -17,7 +17,7 @@ const SAdminLeaveManagement = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:8080/student/appliedforleave"
+        "https://springbootprojecterp.up.railway.app/student/appliedforleave"
       );
       setLeaveRequests(response.data);
       setError(null);
@@ -38,7 +38,7 @@ const SAdminLeaveManagement = () => {
 
     try {
       await axios.put(
-        `http://localhost:8080/student/update/${leaveId}?status=${status}`
+        `https://springbootprojecterp.up.railway.app/student/update/${leaveId}?status=${status}`
       );
       setLeaveRequests(
         leaveRequests.map((request) =>

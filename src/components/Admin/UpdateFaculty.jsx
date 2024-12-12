@@ -29,7 +29,7 @@ const UpdateFaculty = () => {
 
     // Send the updated faculty data to the backend using axios.put
     axios
-      .put(`http://localhost:8080/updatefaculty`, faculty)
+      .put(`https://springbootprojecterp.up.railway.app/updatefaculty`, faculty)
       .then((response) => {
         console.log(response.data); // Log response data
         setMessage("Faculty updated successfully!"); // Set success message
@@ -62,7 +62,9 @@ const UpdateFaculty = () => {
   useEffect(() => {
     const facultyId = "1"; // Example faculty ID, you may get this from props or route params
     axios
-      .get(`http://localhost:8080/viewfaculty/${facultyId}`)
+      .get(
+        `https://springbootprojecterp.up.railway.app/viewfaculty/${facultyId}`
+      )
       .then((response) => {
         setFaculty(response.data); // Pre-fill form with existing faculty data
       })

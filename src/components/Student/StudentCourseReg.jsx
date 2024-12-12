@@ -28,7 +28,7 @@ const StudentCourseReg = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/academic-years-and-semesters"
+        "https://springbootprojecterp.up.railway.app/academic-years-and-semesters"
       );
       setAcademicYears(response.data.academicYears);
       setSemesters(response.data.semesters);
@@ -46,7 +46,7 @@ const StudentCourseReg = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8080/faculty-course-mappings?academicYear=${selectedAcademicYear}&semester=${selectedSemester}`
+        `https://springbootprojecterp.up.railway.app/faculty-course-mappings?academicYear=${selectedAcademicYear}&semester=${selectedSemester}`
       );
       setAvailableMappings(response.data);
     } catch (err) {
@@ -86,7 +86,7 @@ const StudentCourseReg = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/register-courses",
+        "https://springbootprojecterp.up.railway.app/register-courses",
         {
           studentUsername: studentUsername,
           mappingIds: selectedMappings,

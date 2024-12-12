@@ -23,7 +23,7 @@ const RegCourses = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/registered-courses/${studentUsername}`
+        `https://springbootprojecterp.up.railway.app/registered-courses/${studentUsername}`
       );
       setRegisteredCourses(response.data);
     } catch (err) {

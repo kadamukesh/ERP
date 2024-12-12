@@ -26,8 +26,8 @@ const ChangePass = () => {
     try {
       const updatePassUrl =
         passwords.role === "faculty"
-          ? "http://localhost:8080/updatepass"
-          : "http://localhost:8080/updateSpass"; // Use different URI for student role
+          ? "https://springbootprojecterp.up.railway.app/updatepass"
+          : "https://springbootprojecterp.up.railway.app/updateSpass"; // Use different URI for student role
 
       const updatePassPayload = {
         password: passwords.oldPassword,

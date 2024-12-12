@@ -11,7 +11,9 @@ const ViewCourse = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/viewcourse");
+        const response = await axios.get(
+          "https://springbootprojecterp.up.railway.app/viewcourse"
+        );
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);

@@ -61,7 +61,10 @@ export default function FacultyLeave() {
       const payload = { ...formData, facultyId };
       console.log("Sending payload:", payload);
       // Change this line in your handleSubmit function
-      await axios.post("http://localhost:8080/faculty/leave/apply", payload);
+      await axios.post(
+        "https://springbootprojecterp.up.railway.app/faculty/leave/apply",
+        payload
+      );
 
       setSuccess("Leave request submitted successfully!");
       setFormData({

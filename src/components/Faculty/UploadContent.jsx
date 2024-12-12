@@ -16,7 +16,9 @@ const UploadContent = () => {
     const facultyId = localStorage.getItem("fid");
     if (facultyId) {
       axios
-        .get(`http://localhost:8080/vfcmByid/${facultyId}`)
+        .get(
+          `https://springbootprojecterp.up.railway.app/vfcmByid/${facultyId}`
+        )
         .then((response) => {
           setFacultyCourses(response.data);
         })
@@ -43,7 +45,7 @@ const UploadContent = () => {
       setIsSubmitting(true);
       setMessage("");
       const response = await axios.post(
-        `http://localhost:8080/uploadContent`,
+        `https://springbootprojecterp.up.railway.app/uploadContent`,
         formData,
         {
           headers: {

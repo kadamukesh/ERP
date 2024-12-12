@@ -13,7 +13,7 @@ const ViewFaculty = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/viewfaculty")
+      .get("https://springbootprojecterp.up.railway.app/viewfaculty")
       .then((response) => {
         setFacultyMembers(response.data);
         setFilteredFaculty(response.data);
@@ -42,7 +42,9 @@ const ViewFaculty = () => {
 
   const handleDelete = (eid) => {
     axios
-      .delete(`http://localhost:8080/deletefaculty/${eid}`)
+      .delete(
+        `https://springbootprojecterp.up.railway.app/deletefaculty/${eid}`
+      )
       .then((response) => {
         setFacultyMembers(
           facultyMembers.filter((faculty) => faculty.eid !== eid)

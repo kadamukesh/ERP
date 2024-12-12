@@ -26,7 +26,7 @@ const AddCourse = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/addcourse",
+        "https://springbootprojecterp.up.railway.app/addcourse",
         course,
         {
           headers: {

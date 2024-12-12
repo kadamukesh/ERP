@@ -27,7 +27,7 @@ const ViewCourseContent = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/registered-courses/${studentUsername}`
+        `https://springbootprojecterp.up.railway.app/registered-courses/${studentUsername}`
       );
       setRegisteredCourses(response.data);
     } catch (err) {
@@ -46,7 +46,7 @@ const ViewCourseContent = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/viewCourseContentBySection?fcmId=${fcmId}`
+        `https://springbootprojecterp.up.railway.app/viewCourseContentBySection?fcmId=${fcmId}`
       );
       setCourseContents(response.data);
     } catch (err) {

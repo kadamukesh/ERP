@@ -14,7 +14,7 @@ const Mycounsellor = () => {
         // Assuming the student's ID is stored in localStorage after login
         const studentId = localStorage.getItem("sid");
         const response = await axios.get(
-          `http://localhost:8080/student/${studentId}/counselor`
+          `https://springbootprojecterp.up.railway.app/${studentId}/counselor`
         );
         setCounselor(response.data);
         setLoading(false);

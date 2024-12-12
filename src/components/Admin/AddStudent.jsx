@@ -70,7 +70,7 @@ const AddStudent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/addstudent",
+        "https://springbootprojecterp.up.railway.app/addstudent",
         formData,
         {
           headers: {

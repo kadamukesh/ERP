@@ -17,7 +17,9 @@ const MapCounselling = () => {
 
   const fetchFaculties = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/viewfaculty");
+      const response = await axios.get(
+        "https://springbootprojecterp.up.railway.app/viewfaculty"
+      );
       setFaculties(response.data);
     } catch (error) {
       console.error("Error fetching faculties:", error);
@@ -26,7 +28,9 @@ const MapCounselling = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/viewstudent");
+      const response = await axios.get(
+        "https://springbootprojecterp.up.railway.app/viewstudent"
+      );
       setStudents(response.data);
     } catch (error) {
       console.error("Error fetching students:", error);
@@ -37,7 +41,7 @@ const MapCounselling = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/map-counselling",
+        "https://springbootprojecterp.up.railway.app/map-counselling",
         {
           facultyId: selectedFaculty,
           studentId: selectedStudent,

@@ -20,7 +20,7 @@ const FacultyCourseMapping = () => {
   useEffect(() => {
     // Fetch faculties data
     axios
-      .get("http://localhost:8080/viewfaculty")
+      .get("https://springbootprojecterp.up.railway.app/viewfaculty")
       .then((response) => setFaculties(response.data))
       .catch((error) =>
         setError("Error fetching faculties. Please try again later.")
@@ -28,7 +28,7 @@ const FacultyCourseMapping = () => {
 
     // Fetch courses data
     axios
-      .get("http://localhost:8080/viewcourse")
+      .get("https://springbootprojecterp.up.railway.app/viewcourse")
       .then((response) => setCourses(response.data))
       .catch((error) =>
         setError("Error fetching courses. Please try again later.")
@@ -44,7 +44,10 @@ const FacultyCourseMapping = () => {
     setMessage("");
     setError("");
     axios
-      .post("http://localhost:8080/fcoursemapping", formData)
+      .post(
+        "https://springbootprojecterp.up.railway.app/fcoursemapping",
+        formData
+      )
       .then((response) => {
         setMessage(response.data.message);
         setFormData({

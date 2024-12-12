@@ -79,7 +79,7 @@ const PayFee = () => {
 
         try {
           const apiResponse = await axios.post(
-            "http://localhost:8080/payFee",
+            "https://springbootprojecterp.up.railway.app/payFee",
             paymentDetails
           );
 

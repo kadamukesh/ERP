@@ -10,7 +10,9 @@ export default function MyCourses() {
     const facultyId = localStorage.getItem("fid");
     if (facultyId) {
       axios
-        .get(`http://localhost:8080/vfcmByid/${facultyId}`)
+        .get(
+          `https://springbootprojecterp.up.railway.app/vfcmByid/${facultyId}`
+        )
         .then((response) => {
           setFacultyCourses(response.data);
         })

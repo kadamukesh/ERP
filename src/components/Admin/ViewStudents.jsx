@@ -13,7 +13,7 @@ const ViewStudents = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/viewstudent")
+      .get("https://springbootprojecterp.up.railway.app/viewstudent")
       .then((response) => {
         setStudents(response.data);
         setFilteredStudents(response.data);
@@ -39,7 +39,9 @@ const ViewStudents = () => {
 
   const handleDelete = (uid) => {
     axios
-      .delete(`http://localhost:8080/deletestudent/${uid}`)
+      .delete(
+        `https://springbootprojecterp.up.railway.app/deletestudent/${uid}`
+      )
       .then((response) => {
         setStudents(students.filter((student) => student.uid !== uid));
         setFilteredStudents(
