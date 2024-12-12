@@ -39,6 +39,10 @@ import ViewFeedback from "./components/Faculty/ViewFeedback.jsx";
 import MapCounselling from "./components/Admin/MapCounselling.jsx";
 import Mycounsellor from "./components/Student/Mycounsellor.jsx";
 import AssignedStudents from "./components/Faculty/AssignedStudents.jsx";
+import UploadContent from "./components/Faculty/UploadContent.jsx";
+import ViewCourseContent from "./components/Student/ViewCourseContent.jsx";
+import PayFee from "./components/Student/PayFee.jsx";
+import ViewAllPayments from "./components/Student/ViewAllPayments.jsx";
 
 function App() {
   return (
@@ -233,6 +237,44 @@ function App() {
 
         <Route
           exact
+          path="uploadContent"
+          element={
+            <>
+              <UploadContent />
+            </>
+          }
+        />
+        <Route
+          exact
+          path="viewCourseContent"
+          element={
+            <>
+              <ViewCourseContent />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="payfee"
+          element={
+            <>
+              <PayFee />
+            </>
+          }
+        />
+
+        <Route
+          exact
+          path="viewallpayments"
+          element={
+            <>
+              <ViewAllPayments />
+            </>
+          }
+        />
+        <Route
+          exact
           path="adminleave"
           element={
             <>
@@ -387,7 +429,7 @@ function App() {
           path="changepass"
           element={
             <>
-              <ChangePass />
+              <Navbar /> <ChangePass />
             </>
           }
         />

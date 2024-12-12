@@ -13,9 +13,11 @@ const Sidebar = () => {
   const [courseDropdown, setCourseDropdown] = useState(false);
   const [feedbackDropdown, setFeedbackDropdown] = useState(false);
   const [leaveDropdown, setLeaveDropdown] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar toggle state
 
   const [counsellingdropdown, setCounsellingDropdown] = useState(false);
   const location = useLocation();
+
   const DoubleArrowIcon = () => {
     return (
       <span style={{ fontSize: "14px", marginRight: "3px" }}>&gt;&gt;</span>
@@ -44,6 +46,15 @@ const Sidebar = () => {
     }
 
     if (
+      location.pathname.includes("/sadminleave") ||
+      location.pathname.includes("/adminleave")
+    ) {
+      setLeaveDropdown(true);
+    } else {
+      setLeaveDropdown(false);
+    }
+
+    if (
       location.pathname.includes("/addcourse") ||
       location.pathname.includes("/viewcourse") ||
       location.pathname.includes("/updatecourse") ||
@@ -55,12 +66,28 @@ const Sidebar = () => {
     }
   }, [location.pathname]);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="bg-gray-800 h-screen w-66 text-white shadow-md">
-      <div className="p-6">
+    <div
+      className={`bg-gray-800 h-screen text-white shadow-md transition-all duration-300 ${
+        isSidebarOpen ? "w-66" : "w-20"
+      }`}
+    >
+      <div className="p-6 flex justify-between items-center">
         <Link to="/adminhome">
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <h1 className={`text-2xl font-bold ${isSidebarOpen ? "" : "hidden"}`}>
+            Admin Dashboard
+          </h1>
         </Link>
+        <button
+          onClick={toggleSidebar}
+          className="text-white p-2 focus:outline-none"
+        >
+          <span className="text-2xl">{isSidebarOpen ? "☰" : "❯"}</span>
+        </button>
       </div>
 
       <nav className="px-6">
@@ -69,7 +96,7 @@ const Sidebar = () => {
           className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
         >
           <AiFillHome className="text-xl" />
-          <span>Home</span>
+          <span className={`${isSidebarOpen ? "" : "hidden"}`}>Home</span>
         </Link>
 
         {/* Student Dropdown */}
@@ -80,7 +107,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <AiOutlineUser className="text-xl" />
-              <span>Student</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Student
+              </span>
             </div>
             {studentDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -119,7 +148,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <FaChalkboardTeacher className="text-xl" />
-              <span>Faculty</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Faculty
+              </span>
             </div>
             {facultyDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -158,7 +189,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <AiOutlineBook className="text-xl" />
-              <span>Courses</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Courses
+              </span>
             </div>
             {courseDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -205,7 +238,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <VscFeedback className="text-xl" />
-              <span>Feedback</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Feedback
+              </span>
             </div>
             {feedbackDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -230,7 +265,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <MdSupportAgent className="text-xl" />
-              <span>Counselling</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Counselling
+              </span>
             </div>
             {counsellingdropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -255,7 +292,9 @@ const Sidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <MdOutlineFreeCancellation className="text-xl" />
-              <span>Leave Management</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Leave Management
+              </span>
             </div>
             {leaveDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>

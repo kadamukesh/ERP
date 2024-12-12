@@ -27,7 +27,12 @@ const Ssidebar = () => {
   const [leaveDropdown, setLeaveDropdown] = useState(false);
   const [timetableDropdown, settimetableDropdown] = useState(false);
   const [studentinfo, setstudentinfodropdown] = useState(false);
-  const [exam, setexamdropdown] = useState(false);
+  const [fee, setfeedropdown] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar toggle state
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     axios
@@ -48,6 +53,14 @@ const Ssidebar = () => {
       setCounsellingDropdown(true);
     } else {
       setCounsellingDropdown(false);
+    }
+    if (
+      location.pathname.includes("/payfee") ||
+      location.pathname.includes("/viewallpayments")
+    ) {
+      setfeedropdown(true);
+    } else {
+      setfeedropdown(false);
     }
 
     if (
@@ -73,28 +86,23 @@ const Ssidebar = () => {
   };
 
   return (
-    <div className="bg-gray-800 h-screen w-64 text-white shadow-md overflow-y-auto sidebar">
-      <style>
-        {`
-          .sidebar {
-            max-height: calc(98vh - 100px); /* Adjust this if necessary */
-            overflow-y: auto; /* Enable vertical scrolling */
-          }
-          .sidebar::-webkit-scrollbar {
-            width: 8px; /* Width of the scrollbar */
-          }
-          .sidebar::-webkit-scrollbar-thumb {
-            background: #555; /* Color of the scrollbar thumb */
-            border-radius: 4px; /* Rounded corners */
-          }
-          .sidebar::-webkit-scrollbar-track {
-            background: #222; /* Background color of the scrollbar track */
-          }
-        `}
-      </style>
-
-      <div className="p-6">
-        <h1 className="text-xl font-bold">Student Dashboard</h1>
+    <div
+      className={`bg-gray-800 h-screen text-white shadow-md transition-all duration-300 ${
+        isSidebarOpen ? "w-66" : "w-20"
+      }`}
+    >
+      <div className="p-6 flex justify-between items-center">
+        <Link to="/studenthome">
+          <h1 className={`text-2xl font-bold ${isSidebarOpen ? "" : "hidden"}`}>
+            Student Dashboard
+          </h1>
+        </Link>
+        <button
+          onClick={toggleSidebar}
+          className="text-white p-2 focus:outline-none"
+        >
+          <span className="text-2xl">{isSidebarOpen ? "☰" : "❯"}</span>
+        </button>
       </div>
 
       <nav className="px-6">
@@ -103,7 +111,7 @@ const Ssidebar = () => {
           className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
         >
           <AiFillHome className="text-xl" />
-          <span>Home</span>
+          <span className={`${isSidebarOpen ? "" : "hidden"}`}>Home</span>
         </Link>
 
         {/* <Link
@@ -122,7 +130,9 @@ const Ssidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <FaRegEdit className="text-xl" />
-              <span>Registration</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Registration
+              </span>
             </div>
             {counsellingDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -155,32 +165,20 @@ const Ssidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <SlNotebook className="text-xl" />
-              <span>Courses</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Courses
+              </span>
             </div>
             {facultyCoursesDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
           {facultyCoursesDropdown && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/viewCourseContent"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
-                Material
-              </Link>
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                View Course Handouts
-              </Link>
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                Internals
+                View Course Content
               </Link>
             </div>
           )}
@@ -194,7 +192,9 @@ const Ssidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <VscFeedback className="text-xl" />
-              <span>Feedback</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Feedback
+              </span>
             </div>
             {feedbackDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -214,44 +214,39 @@ const Ssidebar = () => {
         {/* Leave Management */}
         <div>
           <button
-            onClick={() => setLeaveDropdown(!leaveDropdown)}
+            onClick={() => setfeedropdown(!fee)}
             className="flex items-center justify-between w-full py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
           >
             <div className="flex items-center space-x-2">
               <MdOutlineFreeCancellation className="text-xl" />
-              <span>Fee Payments</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Fee Payments
+              </span>
             </div>
-            {leaveDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            {fee ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
-          {leaveDropdown && (
+          {fee && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
               <Link
-                to="#"
+                to="/payfee"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
-                Pay -Tution Fee
+                Pay - Fee
               </Link>
               <Link
-                to="#"
+                to="/viewallpayments"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
                 <DoubleArrowIcon />
-                Pay -Sports
-              </Link>
-              <Link
-                to="#"
-                className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
-              >
-                <DoubleArrowIcon />
-                Pay -End Exam Fee
+                View Payments
               </Link>
             </div>
           )}
         </div>
 
         {/* Timetable Dropdown */}
-        <div>
+        {/* <div>
           <button
             onClick={() => settimetableDropdown(!timetableDropdown)}
             className="flex items-center justify-between w-full py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
@@ -273,7 +268,7 @@ const Ssidebar = () => {
               </Link>
             </div>
           )}
-        </div>
+        </div> */}
 
         {/* Student Info Dropdown */}
         <div>
@@ -283,13 +278,15 @@ const Ssidebar = () => {
           >
             <div className="flex items-center space-x-2">
               <FaUserGraduate className="text-xl" />
-              <span>Hostel Management</span>
+              <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+                Hostel Management
+              </span>
             </div>
             {studentinfo ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
           {studentinfo && (
             <div className="ml-6 transition-transform duration-300 ease-in-out transform translate-y-0">
-              <Link
+              {/* <Link
                 to="#"
                 className="block py-2 hover:bg-gray-600 hover:text-white rounded-md transition duration-300"
               >
@@ -303,7 +300,7 @@ const Ssidebar = () => {
               >
                 <DoubleArrowIcon />
                 My Hostel Room Info
-              </Link>
+              </Link> */}
 
               <Link
                 to="/sleave"
@@ -331,7 +328,9 @@ const Ssidebar = () => {
           className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
         >
           <FaUserTie className="text-xl" />
-          <span>My Councellor</span>
+          <span className={`${isSidebarOpen ? "" : "hidden"}`}>
+            My Councellor
+          </span>
         </Link>
 
         <Link
@@ -339,7 +338,7 @@ const Ssidebar = () => {
           className="flex items-center space-x-2 py-2 hover:bg-gray-700 rounded-md transition duration-300 transform hover:scale-105"
         >
           <CgProfile className="text-xl" />
-          <span>Profile</span>
+          <span className={`${isSidebarOpen ? "" : "hidden"}`}>Profile</span>
         </Link>
       </nav>
     </div>

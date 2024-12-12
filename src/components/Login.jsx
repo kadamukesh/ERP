@@ -117,128 +117,137 @@ const Login = () => {
       return;
     }
 
-    // If all login attempts fail
     toast.error("Invalid credentials. Please try again.");
   };
 
   return (
-    <section className="bg-gray-300 min-h-screen flex justify-center items-center px-8">
-      <main>
-        <div className="py-12 grid grid-cols-2 items-center bg-gray-300 w-full">
-          <div className="text-center">
-            <img
-              src="/images/login.png"
-              alt="a girl is trying to log in"
-              className="w-3/5 h-auto mx-auto"
-            />
-          </div>
-          <div className="p-8">
-            <h1 className="mb-6 text-2xl font-semibold border-b-2 border-blue-600 inline-block">
-              Login Form
-            </h1>
+    <section className="min-h-screen bg-gray-300">
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-gray-300 rounded-lg overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            {/* Image Section - Hidden on mobile */}
+            <div className="hidden md:block text-center">
+              <img
+                src="/images/login.png"
+                alt="Login illustration"
+                className="max-w-[57%] mx-auto h-auto"
+              />
+            </div>
 
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-lg font-medium text-gray-700"
-                >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Enter Your Username"
-                  id="username"
-                  required
-                  autoComplete="off"
-                  value={user.username}
-                  onChange={handleInput}
-                  className="w-4/5 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mt-6 mb-2 text-lg font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="relative w-4/5">
+            {/* Form Section */}
+            <div className="p-4 md:p-8">
+              <h1 className="text-2xl md:text-3xl font-semibold mb-6 border-b-2 border-blue-600 inline-block">
+                Login Form
+              </h1>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="block mb-2 text-base md:text-lg font-medium text-gray-700"
+                  >
+                    Username
+                  </label>
                   <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Enter Your Password"
-                    id="password"
+                    type="text"
+                    name="username"
+                    placeholder="Enter Your Username"
+                    id="username"
                     required
                     autoComplete="off"
-                    value={user.password}
+                    value={user.username}
                     onChange={handleInput}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-3 text-gray-600 focus:outline-none"
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
                 </div>
-              </div>
 
-              <div className="mt-6">
-                <label
-                  htmlFor="captcha"
-                  className="block mb-2 text-lg font-medium text-gray-700"
-                >
-                  Verification Code
-                </label>
-                <div className="flex items-center space-x-4">
-                  <div
-                    className="bg-gray-200 py-2 px-4 rounded-md font-bold text-2xl cursor-pointer"
-                    style={{ fontFamily: "monospace" }}
-                    onClick={generateCaptcha}
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block mb-2 text-base md:text-lg font-medium text-gray-700"
                   >
-                    {captcha}
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Enter Your Password"
+                      id="password"
+                      required
+                      autoComplete="off"
+                      value={user.password}
+                      onChange={handleInput}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 focus:outline-none"
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
                   </div>
-                  <input
-                    type="text"
-                    name="captchaInput"
-                    placeholder="Enter verification code"
-                    id="captcha"
-                    required
-                    value={user.captchaInput}
-                    onChange={handleInput}
-                    className="w-30 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
                 </div>
-                <p className="mt-2 text-sm text-gray-500">
-                  Click on the code to regenerate.
-                </p>
-              </div>
 
-              <button
-                type="submit"
-                className="mt-4 px-4 py-1 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700"
-              >
-                Login
-              </button>
+                <div>
+                  <label
+                    htmlFor="captcha"
+                    className="block mb-2 text-base md:text-lg font-medium text-gray-700"
+                  >
+                    Verification Code
+                  </label>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div
+                      className="bg-gray-200 py-2 px-4 rounded-md font-bold text-xl md:text-2xl cursor-pointer select-none"
+                      style={{ fontFamily: "monospace" }}
+                      onClick={generateCaptcha}
+                    >
+                      {captcha}
+                    </div>
+                    <input
+                      type="text"
+                      name="captchaInput"
+                      placeholder="Enter code"
+                      id="captcha"
+                      required
+                      value={user.captchaInput}
+                      onChange={handleInput}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-gray-500">
+                    Click on the code to regenerate
+                  </p>
+                </div>
 
-              <div className="mt-1 flex justify-start ">
-                <a href="/changepass" className="text-blue-500 hover:underline">
-                  Change Password?
-                </a>
-              </div>
-            </form>
+                <div className="space-y-4">
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-200"
+                  >
+                    Login
+                  </button>
 
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-            />
+                  <div className="text-center">
+                    <a
+                      href="/changepass"
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      Change Password?
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </main>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+      />
     </section>
   );
 };

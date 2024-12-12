@@ -1,61 +1,113 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar.jsx";
 import Topbar from "./Topbar.jsx";
-import { FaBook, FaTrophy, FaChalkboardTeacher, FaTools } from "react-icons/fa";
-
+import {
+  FaBook,
+  FaTrophy,
+  FaChalkboardTeacher,
+  FaTools,
+  FaBars,
+} from "react-icons/fa";
+import { IoMdLogOut } from "react-icons/io";
 const AdminHome = () => {
   const [username, setUsername] = useState("");
-  const navigate = useNavigate(); // Hook to navigate
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("adminUsername");
     if (!storedUsername) {
-      navigate("/login"); // Redirect if not logged in
+      navigate("/login");
     } else {
-      setUsername(storedUsername); // Set username if available
+      setUsername(storedUsername);
     }
-  }, [navigate]); // Include navigate in dependency array
-  //login ayinappudu manaki local storage value unte ostadi
+  }, [navigate]);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Topbar */}
-      <Topbar />
+      <div className="lg:hidden">
+        <div className="flex justify-between items-center bg-blue-600 text-white p-4">
+          <button onClick={toggleMobileMenu} className="text-2xl">
+            <FaBars />
+          </button>
+          <h1 className="text-xl font-bold">KLU ERP</h1>
+
+          <button
+            onClick={() => {
+              localStorage.removeItem("adminUsername");
+              navigate("/login");
+            }}
+            className="flex items-center gap-2 text-white"
+          >
+            <IoMdLogOut className="text-2xl" />
+          </button>
+        </div>
+      </div>
+      <div className="hidden lg:block">
+        <Topbar />
+      </div>
 
       {/* Sidebar and Content Section */}
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <Sidebar />
+        {/* Sidebar - hidden on mobile, shown on larger screens */}
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 lg:hidden">
+            <div className="w-64 h-full bg-white shadow-lg">
+              <div className="p-4 border-b">
+                <button
+                  onClick={toggleMobileMenu}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  Close
+                </button>
+              </div>
+              <Sidebar />
+            </div>
+          </div>
+        )}
 
         {/* Main Content */}
-        <div className="flex-1 p-10 bg-gray-100">
-          <h1
-            className="text-3xl font-bold text-center"
-            style={{ marginBottom: "200px" }}
-          >
+        <div className="flex-1 p-4 lg:p-10 bg-gray-100">
+          <h1 className="text-2xl lg:text-3xl font-bold text-center mb-8 lg:mb-16">
             Welcome {username}
           </h1>
 
           {/* Icon and Text Section */}
-          <div className="grid grid-cols-4 gap-10 mt-10 text-center">
-            <div>
-              <FaBook className="text-blue-500 text-6xl mx-auto mb-4" />
-              <p className="text-lg font-semibold">Journals & Conferences</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 mt-6 lg:mt-10 text-center">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <FaBook className="text-blue-500 text-4xl lg:text-6xl mx-auto mb-4" />
+              <p className="text-sm lg:text-lg font-semibold">
+                Journals & Conferences
+              </p>
             </div>
-            <div>
-              <FaTrophy className="text-blue-500 text-6xl mx-auto mb-4" />
-              <p className="text-lg font-semibold">Awards & Recognitions</p>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <FaTrophy className="text-blue-500 text-4xl lg:text-6xl mx-auto mb-4" />
+              <p className="text-sm lg:text-lg font-semibold">
+                Awards & Recognitions
+              </p>
             </div>
-            <div>
-              <FaChalkboardTeacher className="text-blue-500 text-6xl mx-auto mb-4" />
-              <p className="text-lg font-semibold">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <FaChalkboardTeacher className="text-blue-500 text-4xl lg:text-6xl mx-auto mb-4" />
+              <p className="text-sm lg:text-lg font-semibold">
                 Workshops, Seminars & Guest Lectures
               </p>
             </div>
-            <div>
-              <FaTools className="text-blue-500 text-6xl mx-auto mb-4 " />
-              <p className="text-lg font-semibold">Projects & Consultancy</p>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <FaTools className="text-blue-500 text-4xl lg:text-6xl mx-auto mb-4" />
+              <p className="text-sm lg:text-lg font-semibold">
+                Projects & Consultancy
+              </p>
             </div>
           </div>
         </div>

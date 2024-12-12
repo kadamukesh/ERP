@@ -83,18 +83,18 @@ const ChangePass = () => {
 
   return (
     <>
-      <section className="bg-gray-300 min-h-screen flex justify-center items-center px-8">
-        <main>
-          <div className="py-12 grid grid-cols-2 items-center bg-gray-300 w-full">
-            <div className="text-center">
+      <section className="bg-gray-300 min-h-screen flex justify-center items-center p-4 md:p-8">
+        <main className="w-full max-w-4xl">
+          <div className="py-6 md:py-12 grid grid-cols-1 md:grid-cols-2 items-center bg-gray-300 w-full">
+            <div className="text-center hidden md:block">
               <img
                 src="/images/changep.png"
                 alt="a girl is trying to log in"
-                className="w-5/5 h-auto mx-auto right-11"
+                className="w-4/5 h-auto mx-auto"
               />
             </div>
-            <div className="p-8">
-              <h1 className="mb-6 text-2xl font-semibold border-b-2 border-blue-600 inline-block">
+            <div className="p-4 md:p-8 bg-white rounded-lg shadow-md">
+              <h1 className="mb-6 text-xl md:text-2xl font-semibold border-b-2 border-blue-600 inline-block">
                 Change Password
               </h1>
 
@@ -114,7 +114,7 @@ const ChangePass = () => {
                     required
                     value={passwords.oldPassword}
                     onChange={handleInput}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
                   />
                 </div>
 
@@ -133,7 +133,7 @@ const ChangePass = () => {
                     required
                     value={passwords.newPassword}
                     onChange={handleInput}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
                   />
                 </div>
 
@@ -150,7 +150,7 @@ const ChangePass = () => {
                       name="role"
                       value={passwords.role}
                       onChange={handleInput}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                      className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-gray-100 border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-sm md:text-base"
                     >
                       <option value="faculty">Faculty</option>
                       <option value="student">Student</option>
@@ -169,7 +169,7 @@ const ChangePass = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+                  className="w-full py-2 md:py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out text-sm md:text-base"
                 >
                   Update Password
                 </button>
@@ -190,7 +190,7 @@ const ChangePass = () => {
         </main>
 
         <ToastContainer
-          position="top-right"
+          position="bottom-center"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -199,6 +199,7 @@ const ChangePass = () => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
+          className="mb-safe"
         />
       </section>
     </>

@@ -6,7 +6,6 @@ const Welcome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //  3 seconds
     const timer = setTimeout(() => {
       navigate("/index2");
     }, 3000);
@@ -14,14 +13,14 @@ const Welcome = () => {
     return () => clearTimeout(timer);
   }, [navigate]);
 
-  const letters = "Customized ERP Solutions for Modern Learning".split("");
+  const text = "Customized ERP Solutions";
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05, // prathi letters ki delay
+        staggerChildren: 0.05,
       },
     },
   };
@@ -36,18 +35,18 @@ const Welcome = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-red-900">
+    <div className="flex items-center justify-center min-h-screen bg-red-900 px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="flex flex-wrap gap-2 justify-center"
+        className="text-center"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        {letters.map((letter, index) => (
+        {text.split("").map((letter, index) => (
           <motion.span
             key={index}
-            className={`text-4xl font-bold ${
-              letter === " " ? "w-4" : "text-white"
+            className={`inline-block text-2xl sm:text-3xl md:text-4xl font-bold ${
+              letter === " " ? "w-2 sm:w-3 md:w-4" : "text-white"
             }`}
             variants={letterVariants}
             whileHover={{ scale: 1.2, color: "#0ef" }}
